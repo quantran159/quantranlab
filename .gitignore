@@ -1,3 +1,6 @@
+Exit code: 0
+Wall time: 1.1 seconds
+Output:
 node_modules
 .next
 out
@@ -6,3 +9,6 @@ out
 .vercel
 .DS_Store
 npm-debug.log*
+dev.log
+dev.err.log
+

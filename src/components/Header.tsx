@@ -1,3 +1,6 @@
+Exit code: 0
+Wall time: 1.2 seconds
+Output:
 "use client";
 
 import Link from "next/link";
@@ -16,10 +19,11 @@ export function Header() {
         <Link href="/work">{t.work}</Link>
         <Link href="/about">{t.about}</Link>
         <Link href="/contact">{t.contact}</Link>
-        <button className="lang-toggle" onClick={() => setLang(lang === "vi" ? "en" : "vi")} aria-label="Change language">
+        <button className="lang-toggle" onClick={() => setLang(lang === "vi" ? "en" : "vi")} aria-label={lang === "vi" ? "Switch to English" : "Chuyển sang tiếng Việt"}>
           {lang === "vi" ? "EN" : "VI"}
         </button>
       </nav>
     </header>
   );
 }
+
