@@ -1,0 +1,32 @@
+{
+  "name": "quantranlab-portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@sanity/vision": "latest",
+    "@sanity/client": "latest",
+    "lucide-react": "latest",
+    "next": "16.2.11",
+    "next-sanity": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "sanity": "latest",
+    "styled-components": "latest"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "eslint": "latest",
+    "eslint-config-next": "16.2.11",
+    "tailwindcss": "latest",
+    "typescript": "latest"
+  }
+}
