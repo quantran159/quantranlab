@@ -1,24 +1,30 @@
 Exit code: 0
 Wall time: 1.1 seconds
 Output:
-/* Typography pairing from UI UX Pro Max: Vietnamese Friendly. */
+/* Local-first editorial pairing: UTM Bebas + Garamond, with web fallbacks. */
 :root {
-  --font-heading: "Be Vietnam Pro", "Noto Sans", sans-serif;
-  --font-body: "Noto Sans", "Be Vietnam Pro", sans-serif;
+  --font-display: "UTM Bebas", "Bebas Neue", sans-serif;
+  --font-heading: "Garamond", "EB Garamond", Georgia, "Noto Sans", serif;
+  --font-body: "Garamond", "EB Garamond", Georgia, "Noto Sans", serif;
+  --font-ui: "Be Vietnam Pro", "Noto Sans", sans-serif;
 }
 
 body {
   font-family: var(--font-body) !important;
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 18px;
+  line-height: 1.55;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
 
 h1,
+.brand,
+.page-title {
+  font-family: var(--font-display) !important;
+}
+
 h2,
 h3,
-.brand,
 .button,
 .text-link,
 .section-kicker,
@@ -30,25 +36,29 @@ h3,
 .project-year,
 .footer strong,
 .footer a {
-  font-family: var(--font-heading) !important;
+  font-family: var(--font-ui) !important;
 }
 
 .hero h1 {
-  font-size: clamp(3.5rem, 8.4vw, 7.1rem) !important;
-  font-weight: 700;
-  letter-spacing: -0.055em;
+  font-size: clamp(4.8rem, 10vw, 9.5rem) !important;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 0.82;
 }
 
 .hero h2 {
-  font-size: clamp(1.9rem, 3.2vw, 3.25rem) !important;
-  font-weight: 600;
-  letter-spacing: -0.04em;
+  font-family: var(--font-heading) !important;
+  font-size: clamp(2rem, 3.5vw, 3.5rem) !important;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
 }
 
 .page-title {
-  font-size: clamp(3.5rem, 8vw, 6.75rem) !important;
-  font-weight: 700;
-  letter-spacing: -0.055em;
+  font-size: clamp(4.4rem, 9vw, 8.5rem) !important;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 0.86;
 }
 
 .hero-intro,
@@ -70,6 +80,18 @@ h3,
 .page-lead {
   max-width: 42rem;
   line-height: 1.7;
+}
+
+.about-grid h2,
+.case-grid h2,
+.case-section h2,
+.cta h2 {
+  font-family: var(--font-heading) !important;
+}
+
+.visual-copy h3,
+.capability h3 {
+  font-family: var(--font-ui) !important;
 }
 
 button:focus-visible,
