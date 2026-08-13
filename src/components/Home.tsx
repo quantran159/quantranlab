@@ -1,3 +1,6 @@
+Exit code: 0
+Wall time: 0.9 seconds
+Output:
 "use client";
 
 import Link from "next/link";
@@ -16,7 +19,6 @@ const copy = {
     about: "Về tôi",
     labels: ["Web Design", "Next.js", "AI Tools", "Vietnam"],
     selected: "Dự án nổi bật",
-    all: "Xem tất cả dự án",
     what: "Tôi làm gì",
     skills: [
       ["Thiết kế web", "Thiết kế UI/UX, hệ thống giao diện và trải nghiệm rõ ràng, hiện đại."],
@@ -26,6 +28,10 @@ const copy = {
     cta: "Bạn có dự án cần thực hiện?",
     ctaText: "Tôi sẵn sàng lắng nghe ý tưởng và cùng biến nó thành một sản phẩm web chỉn chu.",
     contact: "Liên hệ với tôi",
+    aboutKicker: "Giới thiệu",
+    aboutTitle: "Tôi thiết kế, xây dựng và thử nghiệm trên web.",
+    aboutText: "Quan Tran Lab là nơi tôi lưu lại các dự án cá nhân, website, thử nghiệm AI và những sản phẩm số đang học cách xây dựng tốt hơn mỗi ngày.",
+    aboutFocus: "Hiện tôi tập trung vào web design, Next.js, AI-assisted development và những công cụ giúp công việc số hiệu quả hơn.",
   },
   en: {
     eyebrow: "Personal portfolio of Tran Manh Quan",
@@ -36,7 +42,6 @@ const copy = {
     about: "About me",
     labels: ["Web Design", "Next.js", "AI Tools", "Vietnam"],
     selected: "Selected work",
-    all: "View all projects",
     what: "What I do",
     skills: [
       ["Web design", "UI/UX, interface systems and modern, clear user experiences."],
@@ -46,6 +51,10 @@ const copy = {
     cta: "Have a project in mind?",
     ctaText: "I am open to thoughtful collaborations and turning ideas into polished web products.",
     contact: "Contact me",
+    aboutKicker: "About",
+    aboutTitle: "I design, build and experiment on the web.",
+    aboutText: "Quan Tran Lab is where I document personal projects, websites, AI experiments and digital products while learning to build better every day.",
+    aboutFocus: "My current focus is web design, Next.js, AI-assisted development and tools that make digital work more effective.",
   },
 } as const;
 
@@ -55,15 +64,15 @@ export function Home() {
   const icons = [Monitor, Code2, Sparkles];
   return (
     <main>
-      <section className="hero shell">
+      <section id="home" className="hero shell anchor-section">
         <div className="hero-copy">
           <p className="eyebrow"><span />{t.eyebrow}</p>
           <h1>{t.name}</h1>
           <h2>{t.headline}</h2>
           <p className="hero-intro">{t.intro}</p>
           <div className="hero-actions">
-            <Link href="/work" className="button button-dark">{t.work}<ArrowRight size={18} /></Link>
-            <Link href="/about" className="text-link">{t.about}<span>—</span></Link>
+            <Link href="#work" className="button button-dark">{t.work}<ArrowRight size={18} /></Link>
+            <Link href="#about" className="text-link">{t.about}<span>—</span></Link>
           </div>
           <div className="quick-facts" aria-label="Focus areas">
             {t.labels.map((label) => <span key={label}>{label}</span>)}
@@ -74,12 +83,12 @@ export function Home() {
         </div>
       </section>
 
-      <section className="section shell">
-        <div className="section-heading"><p className="section-kicker"><span />{t.selected}</p><Link href="/work">{t.all}<ArrowRight size={17} /></Link></div>
+      <section id="work" className="section shell anchor-section">
+        <div className="section-heading"><p className="section-kicker"><span />{t.selected}</p></div>
         <div className="projects-grid">{projects.slice(0,3).map((p) => <ProjectCard key={p.slug} project={p} />)}</div>
       </section>
 
-      <section className="section shell">
+      <section id="skills" className="section shell anchor-section">
         <div className="section-heading"><p className="section-kicker"><span />{t.what}</p></div>
         <div className="capabilities">
           {t.skills.map(([title, text], i) => {
@@ -89,10 +98,19 @@ export function Home() {
         </div>
       </section>
 
-      <section className="cta shell">
+      <section id="about" className="section shell anchor-section about-section">
+        <p className="section-kicker"><span />{t.aboutKicker}</p>
+        <div className="about-grid">
+          <div className="portrait-placeholder"><span>Q</span></div>
+          <div><h2>{t.aboutTitle}</h2><p>{t.aboutText}</p><p>{t.aboutFocus}</p></div>
+        </div>
+      </section>
+
+      <section id="contact" className="cta shell anchor-section">
         <div><h2>{t.cta}</h2><p>{t.ctaText}</p></div>
         <Link className="button button-dark" href="/contact">{t.contact}<ArrowRight size={18} /></Link>
       </section>
     </main>
   );
 }
+

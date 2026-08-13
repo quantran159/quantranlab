@@ -1,39 +1,46 @@
-/* Modern Vietnamese typography: Plus Jakarta Sans with Vietnamese-safe fallbacks. */
+Exit code: 0
+Wall time: 0.9 seconds
+Output:
+/* Editorial pairing: Be Vietnam Pro for display, Garamond for long-form copy. */
 :root {
-  --font-display: "Plus Jakarta Sans", "Be Vietnam Pro", "Noto Sans", sans-serif;
-  --font-body: "Plus Jakarta Sans", "Be Vietnam Pro", "Noto Sans", sans-serif;
-  --font-ui: "Plus Jakarta Sans", "Be Vietnam Pro", "Noto Sans", sans-serif;
+  --font-display: "Be Vietnam Pro", "Noto Sans", sans-serif;
+  --font-heading: "Garamond", "EB Garamond", Georgia, "Noto Sans", serif;
+  --font-body: "Garamond", "EB Garamond", Georgia, "Noto Sans", serif;
+  --font-ui: "Be Vietnam Pro", "Noto Sans", sans-serif;
 }
 
 body {
   font-family: var(--font-body) !important;
-  font-size: 18px !important;
-  line-height: 1.65 !important;
+  font-size: 18px;
+  line-height: 1.55;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
 
-h1,
-h2,
-h3,
-.brand,
-.page-title,
-.hero-intro,
-.page-lead,
-.about-grid p,
-.case-grid p,
-.case-section p,
-.capability p,
-.cta p,
-.project-meta span {
-  font-family: var(--font-body) !important;
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(248, 251, 255, 0.82);
+  backdrop-filter: blur(16px);
+}
+
+.anchor-section {
+  scroll-margin-top: 104px;
+}
+
+.about-section {
+  padding-top: 68px !important;
 }
 
 h1,
+.brand,
+.page-title {
+  font-family: var(--font-display) !important;
+}
+
 h2,
 h3,
-.brand,
-.page-title,
 .button,
 .text-link,
 .section-kicker,
@@ -45,206 +52,63 @@ h3,
 .project-year,
 .footer strong,
 .footer a {
-  font-family: var(--font-display) !important;
+  font-family: var(--font-ui) !important;
 }
 
 .hero h1 {
-  font-size: clamp(4.25rem, 9vw, 9rem) !important;
-  font-weight: 800 !important;
-  letter-spacing: -0.075em !important;
-  line-height: 0.9 !important;
+  font-size: clamp(4rem, 8.8vw, 8.25rem) !important;
+  font-weight: 800;
+  letter-spacing: -0.075em;
+  line-height: 0.88;
   text-transform: uppercase;
 }
 
 .hero h2 {
-  font-size: clamp(2.1rem, 3.6vw, 3.6rem) !important;
-  font-weight: 600 !important;
-  letter-spacing: -0.045em !important;
-  line-height: 1.08 !important;
-}
-
-.hero-intro {
-  max-width: 40rem !important;
-  font-size: 20px !important;
-  line-height: 1.7 !important;
-}
-
-.site-header {
-  height: 88px !important;
-}
-
-.site-header nav {
-  gap: 32px !important;
-}
-
-.site-header nav a,
-.lang-toggle {
-  font-size: 15px !important;
-}
-
-.lang-toggle {
-  padding: 10px 13px !important;
-}
-
-.eyebrow,
-.section-kicker {
-  font-size: 15px !important;
-}
-
-.hero-actions {
-  gap: 30px !important;
-  margin-top: 38px !important;
-}
-
-.button {
-  padding: 16px 24px !important;
-  font-size: 15px !important;
-}
-
-.text-link {
-  font-size: 15px !important;
-}
-
-.quick-facts {
-  margin-top: 48px !important;
-}
-
-.quick-facts span {
-  font-size: 14px !important;
-}
-
-.section {
-  padding-block: 42px 52px !important;
-}
-
-.section-heading {
-  margin-bottom: 24px !important;
-}
-
-.section-heading a {
-  font-size: 15px !important;
-}
-
-.project-visual {
-  height: 290px !important;
-  padding: 24px !important;
-}
-
-.visual-copy {
-  margin-top: 38px !important;
-}
-
-.visual-copy p {
-  font-size: 13px !important;
-}
-
-.visual-copy h3 {
-  font-size: 34px !important;
-  line-height: 1.02 !important;
-  letter-spacing: -0.055em !important;
-}
-
-.project-meta {
-  padding: 16px 3px !important;
-}
-
-.project-meta strong {
-  font-size: 17px !important;
-}
-
-.project-meta span,
-.project-year {
-  font-size: 14px !important;
-}
-
-.capabilities {
-  gap: 20px !important;
-}
-
-.capability {
-  padding: 22px !important;
-  gap: 18px !important;
-}
-
-.capability h3 {
-  font-size: 18px !important;
-}
-
-.capability p {
-  font-size: 14px !important;
-  line-height: 1.65 !important;
-}
-
-.cta {
-  margin-block: 28px 68px !important;
-  padding: 30px !important;
-}
-
-.cta h2 {
-  font-size: 28px !important;
-}
-
-.cta p {
-  font-size: 15px !important;
-}
-
-.footer {
-  padding: 36px 0 50px !important;
-  font-size: 14px !important;
-}
-
-.inner {
-  padding: 100px 0 120px !important;
+  font-family: var(--font-heading) !important;
+  font-size: clamp(2rem, 3.5vw, 3.5rem) !important;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
 }
 
 .page-title {
-  font-size: clamp(4.25rem, 8.5vw, 8rem) !important;
-  font-weight: 700 !important;
-  letter-spacing: -0.075em !important;
-  line-height: 0.92 !important;
+  font-size: clamp(4rem, 8vw, 7.75rem) !important;
+  font-weight: 700;
+  letter-spacing: -0.07em;
+  line-height: 0.9;
+}
+
+.hero-intro,
+.page-lead,
+.about-grid p,
+.case-grid p,
+.case-section p,
+.capability p,
+.cta p,
+.project-meta span {
+  font-family: var(--font-body) !important;
+}
+
+.hero-intro {
+  max-width: 36rem;
+  line-height: 1.7;
 }
 
 .page-lead {
-  max-width: 44rem !important;
-  font-size: 22px !important;
-  line-height: 1.7 !important;
+  max-width: 42rem;
+  line-height: 1.7;
 }
 
-.back-link {
-  font-size: 15px !important;
-}
-
+.about-grid h2,
 .case-grid h2,
-.case-section h2 {
-  font-size: 36px !important;
+.case-section h2,
+.cta h2 {
+  font-family: var(--font-heading) !important;
 }
 
-.case-grid p,
-.case-section p {
-  font-size: 19px !important;
-}
-
-.about-grid {
-  gap: 92px !important;
-}
-
-.about-grid h2 {
-  font-size: 48px !important;
-}
-
-.about-grid p {
-  font-size: 20px !important;
-}
-
-.contact-links {
-  gap: 16px !important;
-  max-width: 700px !important;
-}
-
-.contact-links span,
-.contact-links a {
-  padding: 22px !important;
-  font-size: 17px !important;
+.visual-copy h3,
+.capability h3 {
+  font-family: var(--font-ui) !important;
 }
 
 button:focus-visible,
@@ -282,87 +146,6 @@ a:focus-visible {
   border-color: rgba(35, 139, 242, 0.28);
 }
 
-@media (max-width: 900px) {
-  .site-header {
-    height: 78px !important;
-  }
-
-  .hero-copy {
-    padding: 64px 0 26px !important;
-  }
-
-  .hero h1 {
-    font-size: clamp(4rem, 12vw, 6rem) !important;
-  }
-
-  .hero h2 {
-    font-size: clamp(2rem, 6vw, 3rem) !important;
-  }
-
-  .hero-intro {
-    font-size: 19px !important;
-  }
-
-  .project-visual {
-    height: 310px !important;
-  }
-
-  .inner {
-    padding: 76px 0 100px !important;
-  }
-}
-
-@media (max-width: 540px) {
-  body {
-    font-size: 17px !important;
-  }
-
-  .hero h1 {
-    font-size: clamp(3.35rem, 17vw, 4.8rem) !important;
-    letter-spacing: -0.07em !important;
-  }
-
-  .hero h2 {
-    font-size: 2.15rem !important;
-  }
-
-  .hero-intro {
-    font-size: 18px !important;
-  }
-
-  .hero-actions {
-    gap: 18px !important;
-  }
-
-  .button {
-    padding: 15px 21px !important;
-  }
-
-  .project-visual {
-    height: 260px !important;
-  }
-
-  .visual-copy h3 {
-    font-size: 30px !important;
-  }
-
-  .page-title {
-    font-size: 3.7rem !important;
-  }
-
-  .page-lead {
-    font-size: 19px !important;
-  }
-
-  .about-grid h2 {
-    font-size: 38px !important;
-  }
-
-  .about-grid p {
-    font-size: 18px !important;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -372,3 +155,4 @@ a:focus-visible {
     animation-duration: 0.01ms !important;
   }
 }
+
