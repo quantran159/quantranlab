@@ -1,9 +1,9 @@
 Exit code: 0
-Wall time: 1.1 seconds
+Wall time: 1.2 seconds
 Output:
-/* Local-first editorial pairing: UTM Bebas + Garamond, with web fallbacks. */
+/* Editorial pairing: Be Vietnam Pro for display, Garamond for long-form copy. */
 :root {
-  --font-display: "UTM Bebas", "Bebas Neue", sans-serif;
+  --font-display: "Be Vietnam Pro", "Noto Sans", sans-serif;
   --font-heading: "Garamond", "EB Garamond", Georgia, "Noto Sans", serif;
   --font-body: "Garamond", "EB Garamond", Georgia, "Noto Sans", serif;
   --font-ui: "Be Vietnam Pro", "Noto Sans", sans-serif;
@@ -40,10 +40,11 @@ h3,
 }
 
 .hero h1 {
-  font-size: clamp(4.8rem, 10vw, 9.5rem) !important;
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  line-height: 0.82;
+  font-size: clamp(4rem, 8.8vw, 8.25rem) !important;
+  font-weight: 800;
+  letter-spacing: -0.075em;
+  line-height: 0.88;
+  text-transform: uppercase;
 }
 
 .hero h2 {
@@ -55,10 +56,10 @@ h3,
 }
 
 .page-title {
-  font-size: clamp(4.4rem, 9vw, 8.5rem) !important;
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  line-height: 0.86;
+  font-size: clamp(4rem, 8vw, 7.75rem) !important;
+  font-weight: 700;
+  letter-spacing: -0.07em;
+  line-height: 0.9;
 }
 
 .hero-intro,

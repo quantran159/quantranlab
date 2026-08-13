@@ -1,7 +1,7 @@
 Exit code: 0
-Wall time: 1.1 seconds
+Wall time: 1 seconds
 Output:
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=EB+Garamond:wght@400;500;600;700&family=Noto+Sans:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=EB+Garamond:wght@400;500;600;700&family=Noto+Sans:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
 @import "./accessibility.css";
 
