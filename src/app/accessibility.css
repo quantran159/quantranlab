@@ -504,14 +504,41 @@ a:focus-visible {
     backdrop-filter: blur(18px) saturate(120%);
   }
 
+  .site-header nav.header-mobile-menu {
+    display: grid !important;
+    align-items: stretch;
+    gap: 4px;
+  }
+
   .header-mobile-menu .header-nav-link {
     display: flex !important;
     padding: 8px 12px;
+    justify-content: flex-start;
+  }
+
+  .header-mobile-menu .header-nav-link-viewport {
+    width: 100%;
   }
 
   .header-mobile-menu .lang-toggle {
     justify-self: start;
     margin: 5px 0 0 2px;
+  }
+
+  .hero-art {
+    height: clamp(260px, 82vw, 360px);
+    margin-top: 18px;
+  }
+
+  .quick-facts {
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 540px) {
+  .hero-art {
+    height: min(320px, 82vw);
+    margin-top: 18px;
   }
 }
 

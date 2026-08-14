@@ -7,10 +7,10 @@ import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://quantranlab.com"),
-  title: { default: "Quan Tran — Web Designer & Digital Product Builder", template: "%s | Quan Tran Lab" },
-  description: "Portfolio của Trần Mạnh Quân — web design, digital products, AI experiments and modern web development.",
+  title: { default: "Quan Tran — Business Solutions · Google Workspace · AI", template: "%s | Quan Tran Lab" },
+  description: "Portfolio của Trần Mạnh Quân — Business Solutions, Google Workspace, Microsoft, AI và automation.",
   alternates: { canonical: "/" },
-  openGraph: { type: "website", url: "https://quantranlab.com", siteName: "Quan Tran Lab", title: "Quan Tran — Portfolio", description: "Web design, digital products and AI experiments by Tran Manh Quan." },
+  openGraph: { type: "website", url: "https://quantranlab.com", siteName: "Quan Tran Lab", title: "Quan Tran — Business Solutions · Google Workspace · AI", description: "Business Solutions, Google Workspace, Microsoft, AI và automation của Trần Mạnh Quân." },
   robots: { index: true, follow: true },
 };
 

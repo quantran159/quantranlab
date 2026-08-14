@@ -164,6 +164,7 @@ export function ImageEditor({ variant, onError }: { variant: Variant; onError?: 
 
   const shown = isEditing ? draft : saved;
   const imageTransform = `translate(${shown.x}%, ${shown.y}%) scale(${shown.scale}) rotate(${shown.rotation}deg)`;
+  const heroImageTransform = `translate(${shown.x * 5.6} ${shown.y * 5.1}) translate(280 255) rotate(${shown.rotation}) scale(${shown.scale}) translate(-280 -255)`;
 
   return (
     <div className={`image-editor image-editor-${variant}`}>
@@ -196,38 +197,18 @@ export function ImageEditor({ variant, onError }: { variant: Variant; onError?: 
               <clipPath id="profile-shape-clip" clipPathUnits="userSpaceOnUse"><path d={shapePath} /></clipPath>
             </defs>
             <g clipPath="url(#profile-shape-clip)">
-              <foreignObject x="0" y="0" width="560" height="510">
-                <div className="image-editor-hero-image-wrap">
-                  <img
-                    src={shown.src}
-                    alt="Ảnh cá nhân của Trần Mạnh Quân"
-                    className="image-editor-hero-image"
-                    draggable={false}
-                    onError={onError}
-                    onPointerDown={(event) => {
-                      event.stopPropagation();
-                      handlePointerDown(event as unknown as PointerEvent<HTMLDivElement>);
-                    }}
-                    onPointerMove={(event) => handlePointerMove(event as unknown as PointerEvent<HTMLDivElement>)}
-                    onPointerUp={(event) => stopDragging(event as unknown as PointerEvent<HTMLDivElement>)}
-                    onPointerCancel={(event) => stopDragging(event as unknown as PointerEvent<HTMLDivElement>)}
-                    onLostPointerCapture={() => {
-                      dragRef.current = null;
-                      setIsDragging(false);
-                    }}
-                    onMouseDown={(event) => {
-                      event.stopPropagation();
-                      handleMouseDown(event as unknown as MouseEvent<HTMLDivElement>);
-                    }}
-                    onMouseMove={(event) => handleMouseMove(event as unknown as MouseEvent<HTMLDivElement>)}
-                    onMouseUp={handleMouseUp}
-                    onMouseLeave={() => {
-                      if (dragRef.current?.pointerId === -1) handleMouseUp();
-                    }}
-                    style={{ transform: imageTransform }}
-                  />
-                </div>
-              </foreignObject>
+              <image
+                href={shown.src}
+                x="0"
+                y="0"
+                width="560"
+                height="510"
+                preserveAspectRatio="xMidYMid meet"
+                className="image-editor-hero-svg-image"
+                pointerEvents={isEditing ? "auto" : "none"}
+                onError={onError}
+                transform={heroImageTransform}
+              />
               <rect width="560" height="510" fill="url(#profile-shape-sheen)" />
             </g>
             <path d={shapePath} fill="none" stroke="#ffffff" strokeOpacity="0.82" strokeWidth="2" vectorEffect="non-scaling-stroke" />
