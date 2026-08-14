@@ -18,10 +18,6 @@ const storageKeys: Record<Variant, string> = {
   about: "quantranlab-about-image-editor",
 };
 
-function clamp(value: number, min: number, max: number) {
-  return Math.max(min, Math.min(max, value));
-}
-
 export function ImageEditor({ variant, onError }: { variant: Variant; onError?: () => void }) {
   const frameRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<{ pointerId: number; clientX: number; clientY: number; state: ImageState } | null>(null);
@@ -77,8 +73,8 @@ export function ImageEditor({ variant, onError }: { variant: Variant; onError?: 
     const unitY = variant === "hero" ? 510 / rect.height : 100 / rect.height;
     setDraft((current) => ({
       ...current,
-      x: clamp(dragRef.current!.state.x + (clientX - dragRef.current!.clientX) * unitX, variant === "hero" ? -210 : -45, variant === "hero" ? 210 : 45),
-      y: clamp(dragRef.current!.state.y + (clientY - dragRef.current!.clientY) * unitY, variant === "hero" ? -210 : -45, variant === "hero" ? 210 : 45),
+      x: dragRef.current!.state.x + (clientX - dragRef.current!.clientX) * unitX,
+      y: dragRef.current!.state.y + (clientY - dragRef.current!.clientY) * unitY,
     }));
   };
 
@@ -137,11 +133,21 @@ export function ImageEditor({ variant, onError }: { variant: Variant; onError?: 
 
   const handleDrop = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
+    if (!isEditing) return;
     const file = event.dataTransfer.files?.[0];
     if (file) readFile(file);
   };
 
   const reset = () => setDraft({ ...defaults[variant] });
+  const center = () => setDraft((current) => ({ ...current, x: 0, y: 0 }));
+  const changeZoom = (value: string) => {
+    setDraft((current) => ({ ...current, scale: clampZoom(Number(value)) }));
+  };
+
+  const clampZoom = (value: number) => Math.max(0.75, Math.min(3, value));
+  const stopPanelEvent = (event: PointerEvent<HTMLDivElement> | MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+  };
 
   const save = () => {
     try {
@@ -176,7 +182,9 @@ export function ImageEditor({ variant, onError }: { variant: Variant; onError?: 
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
+        onMouseLeave={() => {
+          if (dragRef.current?.pointerId === -1) handleMouseUp();
+        }}
         onDragOver={(event) => { if (isEditing) event.preventDefault(); }}
         onDrop={handleDrop}
         style={{ cursor: isEditing ? (isDragging ? "grabbing" : "grab") : "default", touchAction: isEditing ? "none" : "auto" }}
@@ -204,17 +212,46 @@ export function ImageEditor({ variant, onError }: { variant: Variant; onError?: 
             className="image-editor-about-image"
             draggable={false}
             onError={onError}
-            style={{ transform: `translate(${shown.x}% ${shown.y}%) scale(${shown.scale}) rotate(${shown.rotation}deg)` }}
+            onPointerDown={(event) => {
+              event.stopPropagation();
+              handlePointerDown(event as unknown as PointerEvent<HTMLDivElement>);
+            }}
+            onPointerMove={(event) => handlePointerMove(event as unknown as PointerEvent<HTMLDivElement>)}
+            onPointerUp={(event) => stopDragging(event as unknown as PointerEvent<HTMLDivElement>)}
+            onPointerCancel={(event) => stopDragging(event as unknown as PointerEvent<HTMLDivElement>)}
+            onLostPointerCapture={() => {
+              dragRef.current = null;
+              setIsDragging(false);
+            }}
+            onMouseDown={(event) => {
+              event.stopPropagation();
+              handleMouseDown(event as unknown as MouseEvent<HTMLDivElement>);
+            }}
+            onMouseMove={(event) => handleMouseMove(event as unknown as MouseEvent<HTMLDivElement>)}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={() => {
+              if (dragRef.current?.pointerId === -1) handleMouseUp();
+            }}
+            style={{ transform: `translate(${shown.x}%, ${shown.y}%) scale(${shown.scale}) rotate(${shown.rotation}deg)` }}
           />
         )}
       </div>
       {isEditing ? (
-        <div className="image-editor-panel" onPointerDown={(event) => event.stopPropagation()}>
+        <div
+          className="image-editor-panel"
+          onPointerDown={stopPanelEvent}
+          onPointerMove={stopPanelEvent}
+          onPointerUp={stopPanelEvent}
+          onMouseDown={stopPanelEvent}
+          onMouseMove={stopPanelEvent}
+          onMouseUp={stopPanelEvent}
+          onClick={stopPanelEvent}
+        >
           <label className="image-editor-upload">Thay ảnh<input type="file" accept="image/png,image/jpeg,image/webp" onChange={handleFileChange} /></label>
-          <label className="image-editor-zoom">Zoom <input type="range" min="1" max="2.2" step="0.01" value={draft.scale} onChange={(event) => setDraft({ ...draft, scale: Number(event.target.value) })} /></label>
-          <span className="image-editor-position">X {Math.round(draft.x)} · Y {Math.round(draft.y)}</span>
+          <label className="image-editor-zoom">Zoom <button type="button" aria-label="Thu nhỏ ảnh" onClick={() => changeZoom(String(draft.scale - 0.1))}>−</button><input type="range" min="0.75" max="3" step="0.01" value={draft.scale} onInput={(event) => changeZoom(event.currentTarget.value)} onChange={(event) => changeZoom(event.currentTarget.value)} /><button type="button" aria-label="Phóng to ảnh" onClick={() => changeZoom(String(draft.scale + 0.1))}>+</button></label>
           <button type="button" onClick={() => setDraft({ ...draft, rotation: draft.rotation - 5 })}>↺</button>
           <button type="button" onClick={() => setDraft({ ...draft, rotation: draft.rotation + 5 })}>↻</button>
+          <button type="button" onClick={center}>Căn giữa</button>
           <button type="button" onClick={reset}>Reset</button>
           <button type="button" onClick={cancel}>Hủy</button>
           <button type="button" className="image-editor-save" onClick={save}>Lưu</button>

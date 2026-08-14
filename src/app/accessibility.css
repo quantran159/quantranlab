@@ -187,7 +187,7 @@ a:focus-visible {
   height: 100%;
   object-fit: cover;
   transform-origin: center;
-  pointer-events: none;
+  pointer-events: auto;
   -webkit-user-drag: none;
 }
 
@@ -307,6 +307,13 @@ a:focus-visible {
 .image-editor-zoom input {
   width: 78px;
   accent-color: #238bf2;
+  cursor: ew-resize;
+}
+
+.image-editor-zoom button {
+  min-width: 24px;
+  padding: 4px 7px !important;
+  line-height: 1;
 }
 
 .image-editor-panel small {
