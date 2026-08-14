@@ -7,9 +7,11 @@ import { useLanguage } from "./LanguageProvider";
 function AnimatedNavLink({ href, children, onClick }: { href: string; children: string; onClick?: () => void }) {
   return (
     <Link className="header-nav-link" href={href} onClick={onClick}>
-      <span className="header-nav-link-track">
-        <span>{children}</span>
-        <span aria-hidden="true">{children}</span>
+      <span className="header-nav-link-viewport">
+        <span className="header-nav-link-track">
+          <span>{children}</span>
+          <span aria-hidden="true">{children}</span>
+        </span>
       </span>
     </Link>
   );

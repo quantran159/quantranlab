@@ -375,9 +375,7 @@ a:focus-visible {
 .header-nav-link {
   position: relative;
   display: inline-flex !important;
-  height: 34px;
   align-items: flex-start;
-  overflow: hidden;
   padding: 8px 12px;
   border: 1px solid transparent;
   border-radius: 999px;
@@ -386,6 +384,12 @@ a:focus-visible {
   line-height: 18px;
   text-decoration: none;
   transition: border-color 260ms ease, background 260ms ease, box-shadow 260ms ease, transform 260ms ease;
+}
+
+.header-nav-link-viewport {
+  display: block;
+  height: 18px;
+  overflow: hidden;
 }
 
 .header-nav-link-track {
@@ -502,7 +506,6 @@ a:focus-visible {
 
   .header-mobile-menu .header-nav-link {
     display: flex !important;
-    height: 34px;
     padding: 8px 12px;
   }
 
