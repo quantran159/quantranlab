@@ -4,13 +4,13 @@
 import { ChangeEvent, DragEvent, MouseEvent, PointerEvent, useEffect, useRef, useState } from "react";
 
 type Variant = "hero" | "about";
-type ImageState = { src: string; x: number; y: number; scale: number; rotation: number };
+type ImageState = { src: string; x: number; y: number; scale: number; rotation: number; format?: "percent" };
 
 const shapePath = "M146 24C78 31 28 81 34 147C39 199 73 223 113 246C151 269 164 296 143 327C122 357 73 372 50 414C20 470 77 494 154 494C242 494 304 469 357 435C411 401 452 365 491 327C544 275 543 210 505 155C472 107 419 81 364 72C299 61 243 16 146 24Z";
 
 const defaults: Record<Variant, ImageState> = {
-  hero: { src: "/profile.jpg", x: 0, y: 0, scale: 1, rotation: 0 },
-  about: { src: "/about-profile.jpg", x: 0, y: 0, scale: 1.05, rotation: 0 },
+  hero: { src: "/profile.jpg", x: 0, y: 0, scale: 1, rotation: 0, format: "percent" },
+  about: { src: "/about-profile.jpg", x: 0, y: 0, scale: 1.05, rotation: 0, format: "percent" },
 };
 
 const storageKeys: Record<Variant, string> = {
@@ -35,11 +35,13 @@ export function ImageEditor({ variant, onError }: { variant: Variant; onError?: 
       try {
         const parsed = stored ? JSON.parse(stored) as Partial<ImageState> : legacy ? JSON.parse(legacy) as Partial<ImageState> : null;
         if (parsed && typeof parsed.x === "number" && typeof parsed.y === "number") {
+          const needsHeroConversion = variant === "hero" && parsed.format !== "percent";
           const next = {
             ...defaults[variant],
             ...parsed,
-            x: variant === "about" && !stored ? parsed.x - 50 : parsed.x,
-            y: variant === "about" && !stored ? parsed.y - 50 : parsed.y,
+            format: "percent" as const,
+            x: needsHeroConversion ? parsed.x / 5.6 : variant === "about" && !stored ? parsed.x - 50 : parsed.x,
+            y: needsHeroConversion ? parsed.y / 5.1 : variant === "about" && !stored ? parsed.y - 50 : parsed.y,
           };
           setSaved(next);
           setDraft(next);
@@ -69,8 +71,8 @@ export function ImageEditor({ variant, onError }: { variant: Variant; onError?: 
   const updateDrag = (clientX: number, clientY: number) => {
     if (!dragRef.current || !frameRef.current) return;
     const rect = frameRef.current.getBoundingClientRect();
-    const unitX = variant === "hero" ? 560 / rect.width : 100 / rect.width;
-    const unitY = variant === "hero" ? 510 / rect.height : 100 / rect.height;
+    const unitX = 100 / rect.width;
+    const unitY = 100 / rect.height;
     setDraft((current) => ({
       ...current,
       x: dragRef.current!.state.x + (clientX - dragRef.current!.clientX) * unitX,
@@ -167,7 +169,7 @@ export function ImageEditor({ variant, onError }: { variant: Variant; onError?: 
   };
 
   const shown = isEditing ? draft : saved;
-  const transform = `translate(${shown.x} ${shown.y}) scale(${shown.scale}) rotate(${shown.rotation})`;
+  const imageTransform = `translate(${shown.x}%, ${shown.y}%) scale(${shown.scale}) rotate(${shown.rotation}deg)`;
 
   return (
     <div className={`image-editor image-editor-${variant}`}>
@@ -200,7 +202,38 @@ export function ImageEditor({ variant, onError }: { variant: Variant; onError?: 
               <clipPath id="profile-shape-clip" clipPathUnits="userSpaceOnUse"><path d={shapePath} /></clipPath>
             </defs>
             <g clipPath="url(#profile-shape-clip)">
-              <image href={shown.src} x="-180" y="-150" width="920" height="810" preserveAspectRatio="xMidYMid slice" transform={transform} onError={onError} />
+              <foreignObject x="0" y="0" width="560" height="510">
+                <div className="image-editor-hero-image-wrap">
+                  <img
+                    src={shown.src}
+                    alt="Ảnh cá nhân của Trần Mạnh Quân"
+                    className="image-editor-hero-image"
+                    draggable={false}
+                    onError={onError}
+                    onPointerDown={(event) => {
+                      event.stopPropagation();
+                      handlePointerDown(event as unknown as PointerEvent<HTMLDivElement>);
+                    }}
+                    onPointerMove={(event) => handlePointerMove(event as unknown as PointerEvent<HTMLDivElement>)}
+                    onPointerUp={(event) => stopDragging(event as unknown as PointerEvent<HTMLDivElement>)}
+                    onPointerCancel={(event) => stopDragging(event as unknown as PointerEvent<HTMLDivElement>)}
+                    onLostPointerCapture={() => {
+                      dragRef.current = null;
+                      setIsDragging(false);
+                    }}
+                    onMouseDown={(event) => {
+                      event.stopPropagation();
+                      handleMouseDown(event as unknown as MouseEvent<HTMLDivElement>);
+                    }}
+                    onMouseMove={(event) => handleMouseMove(event as unknown as MouseEvent<HTMLDivElement>)}
+                    onMouseUp={handleMouseUp}
+                    onMouseLeave={() => {
+                      if (dragRef.current?.pointerId === -1) handleMouseUp();
+                    }}
+                    style={{ transform: imageTransform }}
+                  />
+                </div>
+              </foreignObject>
               <rect width="560" height="510" fill="url(#profile-shape-sheen)" />
             </g>
             <path d={shapePath} fill="none" stroke="#ffffff" strokeOpacity="0.82" strokeWidth="2" vectorEffect="non-scaling-stroke" />
@@ -232,7 +265,7 @@ export function ImageEditor({ variant, onError }: { variant: Variant; onError?: 
             onMouseLeave={() => {
               if (dragRef.current?.pointerId === -1) handleMouseUp();
             }}
-            style={{ transform: `translate(${shown.x}%, ${shown.y}%) scale(${shown.scale}) rotate(${shown.rotation}deg)` }}
+            style={{ transform: imageTransform }}
           />
         )}
       </div>

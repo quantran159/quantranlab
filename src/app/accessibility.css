@@ -180,6 +180,14 @@ a:focus-visible {
   background: linear-gradient(155deg, #d8ecfb, #fff8eb);
 }
 
+.image-editor-hero-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.image-editor-hero-image,
 .image-editor-about-image {
   position: absolute;
   inset: 0;
