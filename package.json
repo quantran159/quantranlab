@@ -1,10 +1,10 @@
-Exit code: 0
-Wall time: 1.2 seconds
-Output:
 {
   "name": "quantranlab-portfolio",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -34,4 +34,3 @@ Output:
     "typescript": "latest"
   }
 }
-
