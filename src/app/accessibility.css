@@ -144,6 +144,12 @@ a:focus-visible {
   border-color: rgba(35, 139, 242, 0.28);
 }
 
+.profile-shape-canvas {
+  position: absolute;
+  inset: 0;
+  user-select: none;
+}
+
 .profile-shape {
   position: absolute;
   inset: 0;
@@ -151,7 +157,7 @@ a:focus-visible {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  user-select: none;
+  pointer-events: none;
   -webkit-user-drag: none;
   filter: drop-shadow(0 16px 34px rgba(119, 168, 210, 0.13));
 }

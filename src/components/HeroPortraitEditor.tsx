@@ -16,7 +16,7 @@ function clamp(value: number) {
 }
 
 export function HeroPortraitEditor({ onError }: { onError: () => void }) {
-  const svgRef = useRef<SVGSVGElement>(null);
+  const canvasRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<{ pointerId: number; x: number; y: number; offset: Offset } | null>(null);
   const [offset, setOffset] = useState<Offset>(DEFAULT_OFFSET);
   const [draftOffset, setDraftOffset] = useState<Offset>(DEFAULT_OFFSET);
@@ -42,17 +42,17 @@ export function HeroPortraitEditor({ onError }: { onError: () => void }) {
     return () => window.clearTimeout(timer);
   }, []);
 
-  const handlePointerDown = (event: React.PointerEvent<SVGSVGElement>) => {
-    if (!isEditing || !svgRef.current) return;
+  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!isEditing || !canvasRef.current) return;
     event.preventDefault();
     event.currentTarget.setPointerCapture(event.pointerId);
     dragRef.current = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, offset: draftOffset };
     setIsDragging(true);
   };
 
-  const handlePointerMove = (event: React.PointerEvent<SVGSVGElement>) => {
-    if (!dragRef.current || dragRef.current.pointerId !== event.pointerId || !svgRef.current) return;
-    const rect = svgRef.current.getBoundingClientRect();
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragRef.current || dragRef.current.pointerId !== event.pointerId || !canvasRef.current) return;
+    const rect = canvasRef.current.getBoundingClientRect();
     const deltaX = ((event.clientX - dragRef.current.x) / rect.width) * VIEWBOX.width;
     const deltaY = ((event.clientY - dragRef.current.y) / rect.height) * VIEWBOX.height;
     setDraftOffset({
@@ -61,7 +61,7 @@ export function HeroPortraitEditor({ onError }: { onError: () => void }) {
     });
   };
 
-  const handlePointerUp = (event: React.PointerEvent<SVGSVGElement>) => {
+  const handlePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
     if (dragRef.current?.pointerId !== event.pointerId) return;
     if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
     dragRef.current = null;
@@ -83,12 +83,9 @@ export function HeroPortraitEditor({ onError }: { onError: () => void }) {
 
   return (
     <>
-      <svg
-        ref={svgRef}
-        className="profile-shape"
-        viewBox="0 0 560 510"
-        role="img"
-        aria-label="Ảnh cá nhân của Trần Mạnh Quân"
+      <div
+        ref={canvasRef}
+        className="profile-shape-canvas"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
@@ -96,32 +93,33 @@ export function HeroPortraitEditor({ onError }: { onError: () => void }) {
         onLostPointerCapture={() => { dragRef.current = null; setIsDragging(false); }}
         style={{ cursor: isEditing ? (isDragging ? "grabbing" : "grab") : "default", touchAction: isEditing ? "none" : "auto" }}
       >
-        <defs>
-          <linearGradient id="profile-shape-sheen" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#ffffff" stopOpacity="0.16" />
-            <stop offset="0.55" stopColor="#ffffff" stopOpacity="0" />
-            <stop offset="1" stopColor="#9fd7ff" stopOpacity="0.1" />
-          </linearGradient>
-          <clipPath id="profile-shape-clip" clipPathUnits="userSpaceOnUse">
-            <path d={shapePath} />
-          </clipPath>
-        </defs>
-        <g clipPath="url(#profile-shape-clip)">
-          <image
-            href="/profile.jpg"
-            x="-180"
-            y="-150"
-            width="920"
-            height="810"
-            preserveAspectRatio="xMidYMid slice"
-            transform={`translate(${shownOffset.x} ${shownOffset.y})`}
-            onError={onError}
-          />
-          <rect width={VIEWBOX.width} height={VIEWBOX.height} fill="url(#profile-shape-sheen)" />
-        </g>
-        <path d={shapePath} fill="transparent" pointerEvents={isEditing ? "all" : "none"} />
-        <path d={shapePath} fill="none" stroke="#ffffff" strokeOpacity="0.82" strokeWidth="2" vectorEffect="non-scaling-stroke" pointerEvents="none" />
-      </svg>
+        <svg className="profile-shape" viewBox="0 0 560 510" role="img" aria-label="Ảnh cá nhân của Trần Mạnh Quân">
+          <defs>
+            <linearGradient id="profile-shape-sheen" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stopColor="#ffffff" stopOpacity="0.16" />
+              <stop offset="0.55" stopColor="#ffffff" stopOpacity="0" />
+              <stop offset="1" stopColor="#9fd7ff" stopOpacity="0.1" />
+            </linearGradient>
+            <clipPath id="profile-shape-clip" clipPathUnits="userSpaceOnUse">
+              <path d={shapePath} />
+            </clipPath>
+          </defs>
+          <g clipPath="url(#profile-shape-clip)">
+            <image
+              href="/profile.jpg"
+              x="-180"
+              y="-150"
+              width="920"
+              height="810"
+              preserveAspectRatio="xMidYMid slice"
+              transform={`translate(${shownOffset.x} ${shownOffset.y})`}
+              onError={onError}
+            />
+            <rect width={VIEWBOX.width} height={VIEWBOX.height} fill="url(#profile-shape-sheen)" />
+          </g>
+          <path d={shapePath} fill="none" stroke="#ffffff" strokeOpacity="0.82" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+        </svg>
+      </div>
       {isEditing ? (
         <div className="profile-editor-controls"><span>Kéo ảnh profile để căn vị trí</span><button type="button" onClick={savePosition}>Lưu vị trí</button></div>
       ) : (
