@@ -4,6 +4,7 @@ import "./globals.css";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { CursorGlow } from "@/components/CursorGlow";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://quantranlab.com"),
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="vi" className={GeistSans.variable}><body><LanguageProvider><div className="page-frame"><Header />{children}<Footer /></div></LanguageProvider></body></html>;
+  return <html lang="vi" className={GeistSans.variable}><body><LanguageProvider><div className="page-frame"><CursorGlow /><Header />{children}<Footer /></div></LanguageProvider></body></html>;
 }
 
 
