@@ -8,4 +8,20 @@
 
 .portrait-placeholder { position: relative; overflow: hidden; }
 .about-portrait-image { object-fit: cover; object-position: center; }
+.about-grid p { margin: 0 0 20px; }
+.about-grid p:last-child { margin-bottom: 0; }
+.skills-and-credentials { display: grid; grid-template-columns: .8fr 1.2fr; gap: 22px; margin-top: 30px; }
+.skills-panel, .credentials-panel { padding: 20px; border: 1px solid rgba(20,38,60,.1); border-radius: 17px; background: rgba(255,255,255,.56); }
+.skill-tags { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 18px; }
+.skill-tags span { padding: 9px 12px; border: 1px solid rgba(35,139,242,.18); border-radius: 999px; background: rgba(231,244,255,.72); color: #355d7d; font-size: 13px; }
+.credentials-list { display: grid; gap: 0; margin-top: 10px; }
+.credential-item { display: grid; gap: 5px; padding: 13px 0; border-bottom: 1px solid var(--line); }
+.credential-item:last-child { border-bottom: 0; padding-bottom: 0; }
+.credential-item strong { font-size: 14px; line-height: 1.35; }
+.credential-item span { color: var(--muted); font-size: 12px; line-height: 1.45; }
+.portrait-editor { display: grid; gap: 12px; }
+.portrait-editor-controls { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 12px; }
+.portrait-editor-controls button { border: 0; border-radius: 999px; padding: 10px 14px; background: var(--ink); color: white; font: inherit; font-weight: 700; cursor: pointer; }
+.portrait-editor-controls button:hover { background: #238bf2; }
+@media (max-width:900px){.skills-and-credentials{grid-template-columns:1fr}.portrait-editor-controls{align-items:flex-start;flex-direction:column}}
 
