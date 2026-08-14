@@ -6,7 +6,7 @@ type Offset = { x: number; y: number };
 
 const STORAGE_KEY = "quantranlab-hero-portrait-position";
 const DEFAULT_OFFSET: Offset = { x: 0, y: 0 };
-const MAX_OFFSET = 110;
+const MAX_OFFSET = 210;
 const VIEWBOX = { width: 560, height: 510 };
 
 const shapePath = "M146 24C78 31 28 81 34 147C39 199 73 223 113 246C151 269 164 296 143 327C122 357 73 372 50 414C20 470 77 494 154 494C242 494 304 469 357 435C411 401 452 365 491 327C544 275 543 210 505 155C472 107 419 81 364 72C299 61 243 16 146 24Z";
@@ -74,6 +74,11 @@ export function HeroPortraitEditor({ onError }: { onError: () => void }) {
     setIsEditing(false);
   };
 
+  const startEditing = () => {
+    setDraftOffset(offset);
+    setIsEditing(true);
+  };
+
   const shownOffset = isEditing ? draftOffset : offset;
 
   return (
@@ -104,19 +109,24 @@ export function HeroPortraitEditor({ onError }: { onError: () => void }) {
         <g clipPath="url(#profile-shape-clip)">
           <image
             href="/profile.jpg"
-            x="0"
-            y="0"
-            width={VIEWBOX.width}
-            height={VIEWBOX.height}
+            x="-180"
+            y="-150"
+            width="920"
+            height="810"
             preserveAspectRatio="xMidYMid slice"
-            transform={`translate(${shownOffset.x} ${shownOffset.y}) translate(280 255) scale(1.12) translate(-280 -255)`}
+            transform={`translate(${shownOffset.x} ${shownOffset.y})`}
             onError={onError}
           />
           <rect width={VIEWBOX.width} height={VIEWBOX.height} fill="url(#profile-shape-sheen)" />
         </g>
-        <path d={shapePath} fill="none" stroke="#ffffff" strokeOpacity="0.82" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+        <path d={shapePath} fill="transparent" pointerEvents={isEditing ? "all" : "none"} />
+        <path d={shapePath} fill="none" stroke="#ffffff" strokeOpacity="0.82" strokeWidth="2" vectorEffect="non-scaling-stroke" pointerEvents="none" />
       </svg>
-      {isEditing && <div className="profile-editor-controls"><span>Kéo ảnh profile để căn vị trí</span><button type="button" onClick={savePosition}>Lưu vị trí</button></div>}
+      {isEditing ? (
+        <div className="profile-editor-controls"><span>Kéo ảnh profile để căn vị trí</span><button type="button" onClick={savePosition}>Lưu vị trí</button></div>
+      ) : (
+        <button type="button" className="profile-editor-open" onClick={startEditing}>Chỉnh ảnh</button>
+      )}
     </>
   );
 }
