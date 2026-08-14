@@ -155,7 +155,7 @@ export function Home() {
       <section id="about" className="section shell anchor-section about-section">
         <p className="section-kicker"><span />{t.aboutKicker}</p>
         <div className="about-grid">
-          <div className="portrait-about-image"><Image src="/about-profile.jpg" alt="Ảnh chân dung của Trần Mạnh Quân" fill sizes="(max-width: 900px) 90vw, 32vw" className="about-portrait-image" /></div>
+          <div className="portrait-placeholder"><Image src="/about-profile.jpg" alt="Ảnh chân dung của Trần Mạnh Quân" fill sizes="(max-width: 900px) 90vw, 32vw" className="about-portrait-image" /></div>
           <div><h2>{t.aboutTitle}</h2><p>{t.aboutText}</p><p>{t.aboutRole}</p><p>{t.aboutOutside}</p><p>{t.aboutLab}</p><p>{t.aboutFocus}</p></div>
         </div>
       </section>

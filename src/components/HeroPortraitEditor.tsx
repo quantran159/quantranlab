@@ -6,7 +6,7 @@ type Offset = { x: number; y: number };
 
 const STORAGE_KEY = "quantranlab-hero-portrait-position";
 const DEFAULT_OFFSET: Offset = { x: 0, y: 0 };
-const MAX_OFFSET = 140;
+const MAX_OFFSET = 55;
 
 function clamp(value: number) {
   return Math.max(-MAX_OFFSET, Math.min(MAX_OFFSET, value));
@@ -78,16 +78,24 @@ export function HeroPortraitEditor({ onError }: { onError: () => void }) {
         style={{ cursor: isEditing ? "grab" : "default", touchAction: isEditing ? "none" : "auto" }}
       >
         <defs>
-          <mask id="profile-shape-mask" maskUnits="userSpaceOnUse">
-            <rect width="560" height="510" fill="black" />
-            <g fill="white">
-              <ellipse cx="342" cy="110" rx="190" ry="75" transform="rotate(-8 342 110)" />
-              <ellipse cx="325" cy="240" rx="235" ry="95" transform="rotate(-8 325 240)" />
-              <ellipse cx="300" cy="382" rx="140" ry="52.5" transform="rotate(-8 300 382)" />
-            </g>
-          </mask>
+          <clipPath id="profile-shape-clip" clipPathUnits="userSpaceOnUse">
+            <ellipse cx="342" cy="110" rx="190" ry="75" transform="rotate(-8 342 110)" />
+            <ellipse cx="325" cy="240" rx="235" ry="95" transform="rotate(-8 325 240)" />
+            <ellipse cx="300" cy="382" rx="140" ry="52.5" transform="rotate(-8 300 382)" />
+          </clipPath>
         </defs>
-        <image href="/profile.jpg" x={-170 + shownOffset.x} y={-145 + shownOffset.y} width="900" height="800" preserveAspectRatio="xMidYMid slice" mask="url(#profile-shape-mask)" onError={onError} />
+        <g clipPath="url(#profile-shape-clip)">
+          <image
+            href="/profile.jpg"
+            x="0"
+            y="0"
+            width="560"
+            height="510"
+            preserveAspectRatio="xMidYMid slice"
+            transform={`translate(${shownOffset.x} ${shownOffset.y}) translate(280 255) scale(1.18) translate(-280 -255)`}
+            onError={onError}
+          />
+        </g>
       </svg>
       {isEditing && <div className="profile-editor-controls"><span>Kéo ảnh profile để căn vị trí</span><button type="button" onClick={savePosition}>Lưu vị trí</button></div>}
     </>
