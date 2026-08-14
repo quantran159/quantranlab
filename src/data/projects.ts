@@ -29,7 +29,7 @@ export const projects: Project[] = [
     stack: ["AI", "Vibe Coding"],
   },
   {
-    slug: "ai-mini-apps",
+    slug: "quan-tran-portfolio",
     title: "AI Mini Apps",
     titleEn: "AI Mini Apps",
     type: "AI · Automation · Productivity",
@@ -42,7 +42,7 @@ export const projects: Project[] = [
     stack: ["AI", "Automation", "Productivity"],
   },
   {
-    slug: "business-solution-cases",
+    slug: "studio-website-concept",
     title: "Business Solution Cases",
     titleEn: "Business Solution Cases",
     type: "Google Workspace · Microsoft · B2B",
