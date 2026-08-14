@@ -144,29 +144,18 @@ a:focus-visible {
   border-color: rgba(35, 139, 242, 0.28);
 }
 
-.photo-blob {
-  overflow: hidden;
+.profile-shape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 16px 34px rgba(119, 168, 210, 0.13));
 }
 
-.photo-blob .profile-photo {
-  position: absolute !important;
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover;
-  object-position: center;
+.profile-shape image {
   transform: scale(1.02);
-}
-
-.photo-blob:nth-of-type(1) .profile-photo {
-  object-position: 50% 28%;
-}
-
-.photo-blob:nth-of-type(2) .profile-photo {
-  object-position: 50% 50%;
-}
-
-.photo-blob:nth-of-type(3) .profile-photo {
-  object-position: 50% 72%;
+  transform-origin: center;
 }
 
 .profile-photo-hint {

@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 import { ArrowRight, Code2, Monitor, Sparkles } from "lucide-react";
 import { projects } from "@/data/projects";
@@ -80,17 +79,19 @@ export function Home() {
         </div>
         <div className="hero-art" aria-label="Ảnh cá nhân của Trần Mạnh Quân">
           {hasProfileImage ? (
-            <>
-              <div className="blob blob-a photo-blob">
-                <Image src="/profile.jpg" alt="Ảnh cá nhân của Trần Mạnh Quân" fill priority sizes="(max-width: 900px) 70vw, 38vw" className="profile-photo" onError={() => setHasProfileImage(false)} />
-              </div>
-              <div className="blob blob-b photo-blob">
-                <Image src="/profile.jpg" alt="" fill sizes="(max-width: 900px) 80vw, 45vw" className="profile-photo" onError={() => setHasProfileImage(false)} />
-              </div>
-              <div className="blob blob-c photo-blob">
-                <Image src="/profile.jpg" alt="" fill sizes="(max-width: 900px) 60vw, 30vw" className="profile-photo" onError={() => setHasProfileImage(false)} />
-              </div>
-            </>
+            <svg className="profile-shape" viewBox="0 0 560 510" role="img" aria-label="Ảnh cá nhân của Trần Mạnh Quân">
+              <defs>
+                <mask id="profile-shape-mask" maskUnits="userSpaceOnUse">
+                  <rect width="560" height="510" fill="black" />
+                  <g fill="white">
+                    <ellipse cx="342" cy="110" rx="190" ry="75" transform="rotate(-8 342 110)" />
+                    <ellipse cx="325" cy="240" rx="235" ry="95" transform="rotate(-8 325 240)" />
+                    <ellipse cx="300" cy="382" rx="140" ry="52.5" transform="rotate(-8 300 382)" />
+                  </g>
+                </mask>
+              </defs>
+              <image href="/profile.jpg" x="0" y="0" width="560" height="510" preserveAspectRatio="xMidYMid slice" mask="url(#profile-shape-mask)" onError={() => setHasProfileImage(false)} />
+            </svg>
           ) : (
             <>
               <div className="blob blob-a" /><div className="blob blob-b" /><div className="blob blob-c" />
