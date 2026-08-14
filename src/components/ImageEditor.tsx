@@ -54,12 +54,6 @@ export function ImageEditor({ variant, onError }: { variant: Variant; onError?: 
     return () => window.clearTimeout(timer);
   }, [variant]);
 
-  const startEditing = () => {
-    setDraft(saved);
-    setError("");
-    setIsEditing(true);
-  };
-
   const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
     if (!isEditing || !frameRef.current) return;
     event.preventDefault();
@@ -290,9 +284,7 @@ export function ImageEditor({ variant, onError }: { variant: Variant; onError?: 
           <button type="button" className="image-editor-save" onClick={save}>Lưu</button>
           {error && <small>{error}</small>}
         </div>
-      ) : (
-        <button type="button" className="profile-editor-open" onClick={startEditing}>Chỉnh ảnh</button>
-      )}
+      ) : null}
     </div>
   );
 }
