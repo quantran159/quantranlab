@@ -1,9 +1,11 @@
 Exit code: 0
-Wall time: 0.9 seconds
+Wall time: 1.2 seconds
 Output:
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
 import { ArrowRight, Code2, Monitor, Sparkles } from "lucide-react";
 import { projects } from "@/data/projects";
 import { ProjectCard } from "./ProjectCard";
@@ -62,6 +64,7 @@ export function Home() {
   const { lang } = useLanguage();
   const t = copy[lang];
   const icons = [Monitor, Code2, Sparkles];
+  const [hasProfileImage, setHasProfileImage] = useState(true);
   return (
     <main>
       <section id="home" className="hero shell anchor-section">
@@ -78,8 +81,25 @@ export function Home() {
             {t.labels.map((label) => <span key={label}>{label}</span>)}
           </div>
         </div>
-        <div className="hero-art" aria-hidden="true">
-          <div className="blob blob-a" /><div className="blob blob-b" /><div className="blob blob-c" />
+        <div className="hero-art" aria-label="Ảnh cá nhân của Trần Mạnh Quân">
+          {hasProfileImage ? (
+            <div className="profile-photo-mask">
+              <Image
+                src="/profile.jpg"
+                alt="Ảnh cá nhân của Trần Mạnh Quân"
+                fill
+                priority
+                sizes="(max-width: 900px) 92vw, 46vw"
+                className="profile-photo"
+                onError={() => setHasProfileImage(false)}
+              />
+            </div>
+          ) : (
+            <>
+              <div className="blob blob-a" /><div className="blob blob-b" /><div className="blob blob-c" />
+              <p className="profile-photo-hint">Thêm ảnh tại <code>public/profile.jpg</code></p>
+            </>
+          )}
         </div>
       </section>
 
