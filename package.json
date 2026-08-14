@@ -1,3 +1,6 @@
+Exit code: 0
+Wall time: 1.2 seconds
+Output:
 {
   "name": "quantranlab-portfolio",
   "version": "0.1.0",
@@ -9,8 +12,9 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@sanity/vision": "latest",
     "@sanity/client": "latest",
+    "@sanity/vision": "latest",
+    "geist": "^1.7.2",
     "lucide-react": "latest",
     "next": "16.2.11",
     "next-sanity": "latest",
@@ -30,3 +34,4 @@
     "typescript": "latest"
   }
 }
+

@@ -1,9 +1,9 @@
 Exit code: 0
-Wall time: 2.9 seconds
+Wall time: 1.1 seconds
 Output:
 /* Single-family typography: Geist across the complete interface. */
 :root {
-  --font-geist: "Geist";
+  --font-geist: var(--font-geist-sans);
   --font-display: var(--font-geist), Arial, sans-serif;
   --font-heading: var(--font-geist), Arial, sans-serif;
   --font-body: var(--font-geist), Arial, sans-serif;

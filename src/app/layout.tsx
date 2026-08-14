@@ -1,4 +1,8 @@
+Exit code: 0
+Wall time: 1 seconds
+Output:
 import type { Metadata } from "next";
+import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { Header } from "@/components/Header";
@@ -14,5 +18,6 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="vi"><body><LanguageProvider><div className="page-frame"><Header />{children}<Footer /></div></LanguageProvider></body></html>;
+  return <html lang="vi" className={GeistSans.variable}><body><LanguageProvider><div className="page-frame"><Header />{children}<Footer /></div></LanguageProvider></body></html>;
 }
+
