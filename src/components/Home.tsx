@@ -1,13 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 import { ArrowRight, Code2, Monitor, Sparkles } from "lucide-react";
 import { projects } from "@/data/projects";
 import { ProjectCard } from "./ProjectCard";
 import { useLanguage } from "./LanguageProvider";
-import { HeroPortraitEditor } from "./HeroPortraitEditor";
+import { ImageEditor } from "./ImageEditor";
 
 const copy = {
   vi: {
@@ -117,7 +116,7 @@ export function Home() {
         </div>
         <div className="hero-art" aria-label="Ảnh cá nhân của Trần Mạnh Quân">
           {hasProfileImage ? (
-            <HeroPortraitEditor onError={() => setHasProfileImage(false)} />
+            <ImageEditor variant="hero" onError={() => setHasProfileImage(false)} />
           ) : (
             <>
               <div className="blob blob-a" /><div className="blob blob-b" /><div className="blob blob-c" />
@@ -155,7 +154,7 @@ export function Home() {
       <section id="about" className="section shell anchor-section about-section">
         <p className="section-kicker"><span />{t.aboutKicker}</p>
         <div className="about-grid">
-          <div className="portrait-placeholder"><Image src="/about-profile.jpg" alt="Ảnh chân dung của Trần Mạnh Quân" fill sizes="(max-width: 900px) 90vw, 32vw" className="about-portrait-image" /></div>
+          <ImageEditor variant="about" />
           <div><h2>{t.aboutTitle}</h2><p>{t.aboutText}</p><p>{t.aboutRole}</p><p>{t.aboutOutside}</p><p>{t.aboutLab}</p><p>{t.aboutFocus}</p></div>
         </div>
       </section>
