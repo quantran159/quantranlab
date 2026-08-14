@@ -6,7 +6,10 @@ type Offset = { x: number; y: number };
 
 const STORAGE_KEY = "quantranlab-hero-portrait-position";
 const DEFAULT_OFFSET: Offset = { x: 0, y: 0 };
-const MAX_OFFSET = 55;
+const MAX_OFFSET = 110;
+const VIEWBOX = { width: 560, height: 510 };
+
+const shapePath = "M112 20H382C474 20 536 68 536 144C536 192 513 226 468 248C513 270 536 304 536 356C536 434 474 490 382 490H112C58 490 24 454 24 400V110C24 56 58 20 112 20Z";
 
 function clamp(value: number) {
   return Math.max(-MAX_OFFSET, Math.min(MAX_OFFSET, value));
@@ -14,10 +17,11 @@ function clamp(value: number) {
 
 export function HeroPortraitEditor({ onError }: { onError: () => void }) {
   const svgRef = useRef<SVGSVGElement>(null);
-  const dragRef = useRef<{ x: number; y: number; offset: Offset } | null>(null);
+  const dragRef = useRef<{ pointerId: number; x: number; y: number; offset: Offset } | null>(null);
   const [offset, setOffset] = useState<Offset>(DEFAULT_OFFSET);
   const [draftOffset, setDraftOffset] = useState<Offset>(DEFAULT_OFFSET);
   const [isEditing, setIsEditing] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -40,19 +44,28 @@ export function HeroPortraitEditor({ onError }: { onError: () => void }) {
 
   const handlePointerDown = (event: React.PointerEvent<SVGSVGElement>) => {
     if (!isEditing || !svgRef.current) return;
-    svgRef.current.setPointerCapture(event.pointerId);
-    dragRef.current = { x: event.clientX, y: event.clientY, offset: draftOffset };
+    event.preventDefault();
+    event.currentTarget.setPointerCapture(event.pointerId);
+    dragRef.current = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, offset: draftOffset };
+    setIsDragging(true);
   };
 
   const handlePointerMove = (event: React.PointerEvent<SVGSVGElement>) => {
-    if (!dragRef.current || !svgRef.current) return;
+    if (!dragRef.current || dragRef.current.pointerId !== event.pointerId || !svgRef.current) return;
     const rect = svgRef.current.getBoundingClientRect();
-    const deltaX = ((event.clientX - dragRef.current.x) / rect.width) * 560;
-    const deltaY = ((event.clientY - dragRef.current.y) / rect.height) * 510;
+    const deltaX = ((event.clientX - dragRef.current.x) / rect.width) * VIEWBOX.width;
+    const deltaY = ((event.clientY - dragRef.current.y) / rect.height) * VIEWBOX.height;
     setDraftOffset({
       x: clamp(dragRef.current.offset.x + deltaX),
       y: clamp(dragRef.current.offset.y + deltaY),
     });
+  };
+
+  const handlePointerUp = (event: React.PointerEvent<SVGSVGElement>) => {
+    if (dragRef.current?.pointerId !== event.pointerId) return;
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+    dragRef.current = null;
+    setIsDragging(false);
   };
 
   const savePosition = () => {
@@ -73,15 +86,19 @@ export function HeroPortraitEditor({ onError }: { onError: () => void }) {
         aria-label="Ảnh cá nhân của Trần Mạnh Quân"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
-        onPointerUp={() => { dragRef.current = null; }}
-        onPointerCancel={() => { dragRef.current = null; }}
-        style={{ cursor: isEditing ? "grab" : "default", touchAction: isEditing ? "none" : "auto" }}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        onLostPointerCapture={() => { dragRef.current = null; setIsDragging(false); }}
+        style={{ cursor: isEditing ? (isDragging ? "grabbing" : "grab") : "default", touchAction: isEditing ? "none" : "auto" }}
       >
         <defs>
+          <linearGradient id="profile-shape-sheen" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#ffffff" stopOpacity="0.16" />
+            <stop offset="0.55" stopColor="#ffffff" stopOpacity="0" />
+            <stop offset="1" stopColor="#9fd7ff" stopOpacity="0.1" />
+          </linearGradient>
           <clipPath id="profile-shape-clip" clipPathUnits="userSpaceOnUse">
-            <ellipse cx="342" cy="110" rx="190" ry="75" transform="rotate(-8 342 110)" />
-            <ellipse cx="325" cy="240" rx="235" ry="95" transform="rotate(-8 325 240)" />
-            <ellipse cx="300" cy="382" rx="140" ry="52.5" transform="rotate(-8 300 382)" />
+            <path d={shapePath} />
           </clipPath>
         </defs>
         <g clipPath="url(#profile-shape-clip)">
@@ -89,13 +106,15 @@ export function HeroPortraitEditor({ onError }: { onError: () => void }) {
             href="/profile.jpg"
             x="0"
             y="0"
-            width="560"
-            height="510"
+            width={VIEWBOX.width}
+            height={VIEWBOX.height}
             preserveAspectRatio="xMidYMid slice"
-            transform={`translate(${shownOffset.x} ${shownOffset.y}) translate(280 255) scale(1.18) translate(-280 -255)`}
+            transform={`translate(${shownOffset.x} ${shownOffset.y}) translate(280 255) scale(1.12) translate(-280 -255)`}
             onError={onError}
           />
+          <rect width={VIEWBOX.width} height={VIEWBOX.height} fill="url(#profile-shape-sheen)" />
         </g>
+        <path d={shapePath} fill="none" stroke="#ffffff" strokeOpacity="0.82" strokeWidth="2" vectorEffect="non-scaling-stroke" />
       </svg>
       {isEditing && <div className="profile-editor-controls"><span>Kéo ảnh profile để căn vị trí</span><button type="button" onClick={savePosition}>Lưu vị trí</button></div>}
     </>
