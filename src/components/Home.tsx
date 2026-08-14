@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { ArrowRight, Code2, Monitor, Sparkles } from "lucide-react";
 import { projects } from "@/data/projects";
@@ -123,7 +124,7 @@ export function Home() {
       <section id="about" className="section shell anchor-section about-section">
         <p className="section-kicker"><span />{t.aboutKicker}</p>
         <div className="about-grid">
-          <div className="portrait-placeholder"><span>Q</span></div>
+          <div className="portrait-placeholder"><Image src="/about-profile.jpg" alt="Ảnh chân dung của Trần Mạnh Quân" fill sizes="(max-width: 900px) 90vw, 32vw" className="about-portrait-image" /></div>
           <div><h2>{t.aboutTitle}</h2><p>{t.aboutText}</p><p>{t.aboutRole}</p><p>{t.aboutLab}</p><p>{t.aboutFocus}</p></div>
         </div>
       </section>
