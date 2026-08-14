@@ -17,3 +17,5 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="vi" className={GeistSans.variable}><body><LanguageProvider><div className="page-frame"><Header />{children}<Footer /></div></LanguageProvider></body></html>;
 }
+
+
