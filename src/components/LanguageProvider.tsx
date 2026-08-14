@@ -1,6 +1,3 @@
-Exit code: 0
-Wall time: 1 seconds
-Output:
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
@@ -30,4 +27,3 @@ export function useLanguage() {
   if (!value) throw new Error("useLanguage must be used inside LanguageProvider");
   return value;
 }
-
