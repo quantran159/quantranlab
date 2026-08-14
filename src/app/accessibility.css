@@ -1,12 +1,13 @@
 Exit code: 0
-Wall time: 0.9 seconds
+Wall time: 2.9 seconds
 Output:
-/* Editorial pairing: Be Vietnam Pro for display, Garamond for long-form copy. */
+/* Single-family typography: Geist across the complete interface. */
 :root {
-  --font-display: "Be Vietnam Pro", "Noto Sans", sans-serif;
-  --font-heading: "Garamond", "EB Garamond", Georgia, "Noto Sans", serif;
-  --font-body: "Garamond", "EB Garamond", Georgia, "Noto Sans", serif;
-  --font-ui: "Be Vietnam Pro", "Noto Sans", sans-serif;
+  --font-geist: "Geist";
+  --font-display: var(--font-geist), Arial, sans-serif;
+  --font-heading: var(--font-geist), Arial, sans-serif;
+  --font-body: var(--font-geist), Arial, sans-serif;
+  --font-ui: var(--font-geist), Arial, sans-serif;
 }
 
 body {
