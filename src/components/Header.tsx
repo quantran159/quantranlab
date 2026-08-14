@@ -1,6 +1,3 @@
-Exit code: 0
-Wall time: 1 seconds
-Output:
 "use client";
 
 import Link from "next/link";
@@ -27,4 +24,3 @@ export function Header() {
     </header>
   );
 }
-
