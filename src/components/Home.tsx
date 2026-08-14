@@ -1,6 +1,3 @@
-Exit code: 0
-Wall time: 1.2 seconds
-Output:
 "use client";
 
 import Link from "next/link";
@@ -83,17 +80,17 @@ export function Home() {
         </div>
         <div className="hero-art" aria-label="Ảnh cá nhân của Trần Mạnh Quân">
           {hasProfileImage ? (
-            <div className="profile-photo-mask">
-              <Image
-                src="/profile.jpg"
-                alt="Ảnh cá nhân của Trần Mạnh Quân"
-                fill
-                priority
-                sizes="(max-width: 900px) 92vw, 46vw"
-                className="profile-photo"
-                onError={() => setHasProfileImage(false)}
-              />
-            </div>
+            <>
+              <div className="blob blob-a photo-blob">
+                <Image src="/profile.jpg" alt="Ảnh cá nhân của Trần Mạnh Quân" fill priority sizes="(max-width: 900px) 70vw, 38vw" className="profile-photo" onError={() => setHasProfileImage(false)} />
+              </div>
+              <div className="blob blob-b photo-blob">
+                <Image src="/profile.jpg" alt="" fill sizes="(max-width: 900px) 80vw, 45vw" className="profile-photo" onError={() => setHasProfileImage(false)} />
+              </div>
+              <div className="blob blob-c photo-blob">
+                <Image src="/profile.jpg" alt="" fill sizes="(max-width: 900px) 60vw, 30vw" className="profile-photo" onError={() => setHasProfileImage(false)} />
+              </div>
+            </>
           ) : (
             <>
               <div className="blob blob-a" /><div className="blob blob-b" /><div className="blob blob-c" />
