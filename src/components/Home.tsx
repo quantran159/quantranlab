@@ -19,8 +19,8 @@ const copy = {
     labels: ["Google Workspace", "Microsoft", "AI", "Business Solutions"],
     selected: "Dự án nổi bật",
     what: "Tôi làm gì",
-    skillsLabel: "Kỹ năng nổi bật",
-    credentialsLabel: "Chứng chỉ & badges",
+    skillsLabel: "Kỹ năng & chứng chỉ liên quan",
+    credentialsLabel: "Chứng chỉ nổi bật",
     skillTags: ["AI tools & productivity", "AI-assisted development", "Automation & mini apps", "Google Workspace", "Microsoft / Office / Windows", "Solution consulting"],
     credentials: [
       ["Google AI Essentials V1", "Coursera", "08/2025"],
@@ -28,11 +28,6 @@ const copy = {
       ["Gemini in Google Docs", "LinkedIn", "01/2026"],
       ["Gemini Certified Educator", "Google for Education", "12/2025 · Hết hạn 12/2028"],
       ["Google Workspace Administration: Management and Reporting", "LinkedIn", "01/2024"],
-      ["Google Cloud Foundations", "LinkedIn", "01/2024"],
-      ["Begin with Workspace: Essentials", "Google Cloud Skills Boost", "03/2023"],
-      ["The Skill Badge Challenge Digital Skill Badge Explorer Swag", "Google Cloud Skills Boost", "11/2024 · Badge"],
-      ["EF SET English Certificate 66/100 (C1 Proficient)", "EF SET", "08/2022"],
-      ["Google Analytics Certification", "Skillshop", "Hết hạn 01/2025"],
     ],
     skills: [
       ["Business Solutions", "Tư vấn giải pháp công nghệ dựa trên nhu cầu vận hành thực tế của doanh nghiệp."],
@@ -60,8 +55,8 @@ const copy = {
     labels: ["Google Workspace", "Microsoft", "AI", "Business Solutions"],
     selected: "Selected work",
     what: "What I do",
-    skillsLabel: "Core skills",
-    credentialsLabel: "Credentials & badges",
+    skillsLabel: "Related skills & credentials",
+    credentialsLabel: "Selected credentials",
     skillTags: ["AI tools & productivity", "AI-assisted development", "Automation & mini apps", "Google Workspace", "Microsoft / Office / Windows", "Solution consulting"],
     credentials: [
       ["Google AI Essentials V1", "Coursera", "Aug 2025"],
@@ -69,11 +64,6 @@ const copy = {
       ["Gemini in Google Docs", "LinkedIn", "Jan 2026"],
       ["Gemini Certified Educator", "Google for Education", "Dec 2025 · Expires Dec 2028"],
       ["Google Workspace Administration: Management and Reporting", "LinkedIn", "Jan 2024"],
-      ["Google Cloud Foundations", "LinkedIn", "Jan 2024"],
-      ["Begin with Workspace: Essentials", "Google Cloud Skills Boost", "Mar 2023"],
-      ["The Skill Badge Challenge Digital Skill Badge Explorer Swag", "Google Cloud Skills Boost", "Nov 2024 · Badge"],
-      ["EF SET English Certificate 66/100 (C1 Proficient)", "EF SET", "Aug 2022"],
-      ["Google Analytics Certification", "Skillshop", "Expired Jan 2025"],
     ],
     skills: [
       ["Business Solutions", "Technology solution consulting grounded in the real operating needs of businesses."],
@@ -143,9 +133,7 @@ export function Home() {
           <div className="skills-panel">
             <p className="section-kicker"><span />{t.skillsLabel}</p>
             <div className="skill-tags">{t.skillTags.map((skill) => <span key={skill}>{skill}</span>)}</div>
-          </div>
-          <div className="credentials-panel">
-            <p className="section-kicker"><span />{t.credentialsLabel}</p>
+            <p className="skills-subheading">{t.credentialsLabel}</p>
             <div className="credentials-list">{t.credentials.map(([title, issuer, date]) => <article className="credential-item" key={title}><strong>{title}</strong><span>{issuer} · {date}</span></article>)}</div>
           </div>
         </div>
@@ -166,4 +154,5 @@ export function Home() {
     </main>
   );
 }
+
 
