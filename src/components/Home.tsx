@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowRight, Code2, Monitor, Sparkles } from "lucide-react";
 import { projects } from "@/data/projects";
 import { ProjectCard } from "./ProjectCard";
@@ -83,6 +83,24 @@ const copy = {
   },
 } as const;
 
+function RevealSection({ id, className, children }: { id: string; className: string; children: ReactNode }) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const observer = new IntersectionObserver(([entry]) => setIsInView(entry.isIntersecting), {
+      threshold: 0.16,
+      rootMargin: "-8% 0px -8% 0px",
+    });
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  return <section ref={sectionRef} id={id} className={`${className} scroll-section${isInView ? " is-in-view" : ""}`}>{children}</section>;
+}
+
 export function Home() {
   const { lang } = useLanguage();
   const t = copy[lang];
@@ -116,12 +134,12 @@ export function Home() {
         </div>
       </section>
 
-      <section id="work" className="section shell anchor-section">
+      <RevealSection id="work" className="section shell anchor-section">
         <div className="section-heading"><p className="section-kicker"><span />{t.selected}</p></div>
         <div className="projects-grid">{projects.slice(0,3).map((p) => <ProjectCard key={p.slug} project={p} />)}</div>
-      </section>
+      </RevealSection>
 
-      <section id="skills" className="section shell anchor-section">
+      <RevealSection id="skills" className="section shell anchor-section">
         <div className="section-heading"><p className="section-kicker"><span />{t.what}</p></div>
         <div className="capabilities">
           {t.skills.map(([title, text], i) => {
@@ -137,22 +155,20 @@ export function Home() {
             <div className="credentials-list">{t.credentials.map(([title, issuer, date]) => <article className="credential-item" key={title}><strong>{title}</strong><span>{issuer} · {date}</span></article>)}</div>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
-      <section id="about" className="section shell anchor-section about-section">
+      <RevealSection id="about" className="section shell anchor-section about-section">
         <p className="section-kicker"><span />{t.aboutKicker}</p>
         <div className="about-grid">
           <ImageEditor variant="about" />
           <div><h2>{t.aboutTitle}</h2><p>{t.aboutText}</p><p>{t.aboutRole}</p><p>{t.aboutOutside}</p><p>{t.aboutLab}</p><p>{t.aboutFocus}</p></div>
         </div>
-      </section>
+      </RevealSection>
 
-      <section id="contact" className="cta shell anchor-section">
+      <RevealSection id="contact" className="cta shell anchor-section">
         <div><h2>{t.cta}</h2><p>{t.ctaText}</p></div>
         <Link className="button button-dark" href="/contact">{t.contact}<ArrowRight size={18} /></Link>
-      </section>
+      </RevealSection>
     </main>
   );
 }
-
-

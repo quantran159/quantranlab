@@ -14,12 +14,11 @@ export function CursorGlow() {
     let y = -100;
 
     const render = () => {
-      glow.style.transform = `translate3d(${x - 38}px, ${y - 38}px, 0)`;
+      glow.style.transform = `translate3d(${x - 68}px, ${y - 68}px, 0)`;
       frame = 0;
     };
 
-    const showAt = (event: PointerEvent) => {
-      if (event.pointerType === "touch") return;
+    const showAt = (event: MouseEvent) => {
       x = event.clientX;
       y = event.clientY;
       glow.dataset.visible = "true";
@@ -30,17 +29,17 @@ export function CursorGlow() {
       glow.dataset.visible = "false";
     };
 
-    const handlePointerOut = (event: PointerEvent) => {
+    const handlePointerOut = (event: MouseEvent) => {
       if (!event.relatedTarget) hide();
     };
 
-    document.addEventListener("pointermove", showAt, { passive: true });
-    document.addEventListener("pointerout", handlePointerOut);
+    window.addEventListener("mousemove", showAt, { passive: true });
+    window.addEventListener("mouseout", handlePointerOut);
     window.addEventListener("blur", hide);
 
     return () => {
-      document.removeEventListener("pointermove", showAt);
-      document.removeEventListener("pointerout", handlePointerOut);
+      window.removeEventListener("mousemove", showAt);
+      window.removeEventListener("mouseout", handlePointerOut);
       window.removeEventListener("blur", hide);
       if (frame) window.cancelAnimationFrame(frame);
     };
@@ -53,4 +52,3 @@ export function CursorGlow() {
     </div>
   );
 }
-

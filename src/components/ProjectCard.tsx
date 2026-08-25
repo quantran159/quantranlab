@@ -10,6 +10,7 @@ export function ProjectCard({ project }: { project: Project }) {
   return (
     <Link className="project-card" href={`/work/${project.slug}`}>
       <div className={`project-visual visual-${project.accent}`}>
+        {project.slug === "approvehub" && <img className="project-cover-image" src="/approvehub.png" alt="Giao diện ApproveHub" />}
         <div className="visual-chrome"><span /><span /><span /></div>
         <div className="visual-copy">
           <p>{project.type}</p>

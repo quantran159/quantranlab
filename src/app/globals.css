@@ -11,6 +11,13 @@
 .about-grid p { margin: 0 0 20px; }
 .about-grid p:last-child { margin-bottom: 0; }
 .skills-and-credentials { margin-top: 30px; }
+.project-cover-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: .9; transition: transform .45s ease, opacity .45s ease; }
+.project-card:hover .project-cover-image { transform: scale(1.035); opacity: 1; }
+.project-visual:has(.project-cover-image) { background: #06382f; }
+.project-visual:has(.project-cover-image)::after { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0, 30, 24, .08), rgba(0, 22, 18, .52)); content: ""; pointer-events: none; }
+.case-hero:has(.case-project-image) { background: #eff9f7; box-shadow: 0 24px 70px rgba(16, 82, 68, .12); }
+.case-project-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; filter: brightness(1.12) saturate(1.18) contrast(1.08); image-rendering: auto; }
+.case-project-sheen { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,.14), transparent 42%, rgba(0, 93, 67, .08)); mix-blend-mode: screen; pointer-events: none; }
 .skills-panel, .credentials-panel { padding: 20px; border: 1px solid rgba(20,38,60,.1); border-radius: 17px; background: rgba(255,255,255,.56); }
 .skill-tags { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 18px; }
 .skill-tags span { padding: 9px 12px; border: 1px solid rgba(35,139,242,.18); border-radius: 999px; background: rgba(231,244,255,.72); color: #355d7d; font-size: 13px; }
@@ -28,4 +35,3 @@
 .profile-editor-controls button { border: 0; border-radius: 999px; padding: 9px 13px; background: var(--ink); color: white; font: inherit; font-weight: 700; cursor: pointer; }
 .profile-editor-controls button:hover { background: #238bf2; }
 @media (max-width:900px){.credentials-list{grid-template-columns:1fr}.portrait-editor-controls{align-items:flex-start;flex-direction:column}}
-

@@ -17,73 +17,67 @@ body {
 
 .cursor-glow {
   position: fixed;
-  z-index: 40;
+  z-index: 9999;
   top: 0;
   left: 0;
-  width: 76px;
-  height: 76px;
+  width: 136px;
+  height: 136px;
   pointer-events: none;
   opacity: 0;
   border-radius: 50%;
-  filter: blur(5px);
-  mix-blend-mode: multiply;
-  transition: opacity 240ms ease;
+  background: radial-gradient(circle at 48% 46%, rgba(231, 53, 43, 0.11) 0, rgba(164, 24, 31, 0.06) 34%, transparent 74%);
+  filter: blur(16px);
+  transition: transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 240ms ease;
   will-change: transform, opacity;
 }
 
 .cursor-glow[data-visible="true"] {
-  opacity: 0.34;
+  opacity: 0.38;
 }
 
 .cursor-glow::before {
   position: absolute;
-  inset: 7px;
+  inset: 12px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 197, 121, 0.34) 0, rgba(255, 225, 175, 0.18) 36%, transparent 72%);
+  background: radial-gradient(circle, rgba(255, 113, 59, 0.16) 0, rgba(177, 24, 31, 0.07) 36%, transparent 74%);
   content: "";
-  filter: blur(8px);
+  filter: blur(16px);
 }
 
 .cursor-glow-flame {
   position: absolute;
   display: block;
   border-radius: 50% 42% 58% 46%;
-  background: radial-gradient(circle at 45% 42%, rgba(255, 244, 211, 0.62), rgba(255, 179, 95, 0.23) 42%, transparent 73%);
-  filter: blur(7px);
+  background: radial-gradient(circle at 45% 42%, rgba(255, 218, 157, 0.3), rgba(218, 47, 39, 0.13) 42%, transparent 73%);
+  filter: blur(13px);
   transform-origin: 50% 80%;
 }
 
 .cursor-glow-flame-one {
-  top: 9px;
-  left: 25px;
-  width: 27px;
-  height: 42px;
-  animation: cursor-flame-one 1.8s ease-in-out infinite alternate;
+  top: 13px;
+  left: 38px;
+  width: 40px;
+  height: 62px;
+  animation: cursor-flame-one 2.4s ease-in-out infinite alternate;
 }
 
 .cursor-glow-flame-two {
-  top: 24px;
-  left: 12px;
-  width: 33px;
-  height: 29px;
-  opacity: 0.72;
-  animation: cursor-flame-two 1.45s ease-in-out infinite alternate;
+  top: 42px;
+  left: 20px;
+  width: 52px;
+  height: 45px;
+  opacity: 0.52;
+  animation: cursor-flame-two 2s ease-in-out infinite alternate;
 }
 
 @keyframes cursor-flame-one {
-  from { transform: rotate(-10deg) scale(0.82, 0.94); opacity: 0.48; }
-  to { transform: rotate(13deg) scale(1.08, 1.12); opacity: 0.82; }
+  from { transform: rotate(-9deg) scale(0.84, 0.92); opacity: 0.34; }
+  to { transform: rotate(11deg) scale(1.06, 1.12); opacity: 0.68; }
 }
 
 @keyframes cursor-flame-two {
-  from { transform: rotate(14deg) scale(1.04, 0.86); }
-  to { transform: rotate(-12deg) scale(0.84, 1.08); }
-}
-
-@media (pointer: coarse), (prefers-reduced-motion: reduce) {
-  .cursor-glow {
-    display: none;
-  }
+  from { transform: rotate(12deg) scale(1.02, 0.86); opacity: 0.42; }
+  to { transform: rotate(-10deg) scale(0.86, 1.06); opacity: 0.68; }
 }
 
 .site-header {
@@ -100,6 +94,64 @@ body {
 
 .about-section {
   padding-top: 68px !important;
+}
+
+.scroll-section .section-kicker {
+  position: relative;
+  opacity: 0.58;
+  transform: translateY(10px);
+  transition: opacity 650ms ease, transform 650ms cubic-bezier(0.22, 1, 0.36, 1), color 650ms ease;
+}
+
+.scroll-section.is-in-view .section-kicker {
+  opacity: 1;
+  color: var(--ink);
+  transform: translateY(0);
+}
+
+.scroll-section .section-kicker > span {
+  position: relative;
+  flex: 0 0 8px;
+  transition: box-shadow 650ms ease, transform 650ms ease, background 650ms ease;
+}
+
+.scroll-section.is-in-view .section-kicker > span {
+  background: #e45b4b;
+  box-shadow: 0 0 0 6px rgba(228, 91, 75, 0.09), 0 0 18px rgba(228, 91, 75, 0.35);
+  transform: scale(1.08);
+}
+
+.scroll-section > .section-heading::after,
+.scroll-section > .section-kicker::after {
+  height: 1px;
+  flex: 1;
+  margin-left: 22px;
+  background: linear-gradient(90deg, rgba(20, 38, 60, 0.14), transparent);
+  content: "";
+  opacity: 0;
+  transform: scaleX(0.35);
+  transform-origin: left;
+  transition: opacity 700ms ease, transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scroll-section.is-in-view > .section-heading::after,
+.scroll-section.is-in-view > .section-kicker::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.scroll-section:not(.is-in-view) > .section-heading,
+.scroll-section:not(.is-in-view) > .section-kicker {
+  transition: opacity 500ms ease;
+}
+
+.skills-panel > .section-kicker {
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(20, 38, 60, 0.08);
+}
+
+.scroll-section.is-in-view .skills-panel > .section-kicker {
+  border-bottom-color: rgba(228, 91, 75, 0.24);
 }
 
 h1,
@@ -612,4 +664,3 @@ a:focus-visible {
     margin-top: 18px;
   }
 }
-
