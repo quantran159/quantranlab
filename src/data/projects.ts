@@ -29,6 +29,7 @@ export const projects: Project[] = [
     accent: "blue",
     featured: true,
     stack: ["TypeScript", "Cloudflare Workers", "Cloudflare D1", "Cloudflare R2", "PWA"],
+    href: "https://quan-tran-homestay.quantranmanh159.workers.dev/",
     highlights: [
       "Quản lý bàn, đơn hàng và luồng gửi món đến hàng đợi bếp.",
       "Theo dõi đặt phòng, nhận/trả phòng và dịch vụ lưu trú.",
