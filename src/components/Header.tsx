@@ -21,8 +21,8 @@ export function Header() {
   const { lang, setLang } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
   const t = lang === "vi"
-    ? { work: "Dự án", skills: "Tôi làm gì", about: "Giới thiệu", contact: "Liên hệ" }
-    : { work: "Work", skills: "What I do", about: "About", contact: "Contact" };
+    ? { work: "Dự án", skills: "Tôi làm gì", about: "Giới thiệu", services: "Dịch vụ", contact: "Liên hệ" }
+    : { work: "Work", skills: "What I do", about: "About", services: "Services", contact: "Contact" };
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -33,6 +33,7 @@ export function Header() {
         <AnimatedNavLink href="/#work">{t.work}</AnimatedNavLink>
         <AnimatedNavLink href="/#skills">{t.skills}</AnimatedNavLink>
         <AnimatedNavLink href="/#about">{t.about}</AnimatedNavLink>
+        <AnimatedNavLink href="/services">{t.services}</AnimatedNavLink>
         <AnimatedNavLink href="/#contact">{t.contact}</AnimatedNavLink>
         <button className="lang-toggle" onClick={() => setLang(lang === "vi" ? "en" : "vi")} aria-label={lang === "vi" ? "Switch to English" : "Chuyển sang tiếng Việt"}>
           {lang === "vi" ? "EN" : "VI"}
@@ -53,6 +54,7 @@ export function Header() {
           <AnimatedNavLink href="/#work" onClick={closeMenu}>{t.work}</AnimatedNavLink>
           <AnimatedNavLink href="/#skills" onClick={closeMenu}>{t.skills}</AnimatedNavLink>
           <AnimatedNavLink href="/#about" onClick={closeMenu}>{t.about}</AnimatedNavLink>
+          <AnimatedNavLink href="/services" onClick={closeMenu}>{t.services}</AnimatedNavLink>
           <AnimatedNavLink href="/#contact" onClick={closeMenu}>{t.contact}</AnimatedNavLink>
           <button className="lang-toggle" onClick={() => setLang(lang === "vi" ? "en" : "vi")} aria-label={lang === "vi" ? "Switch to English" : "Chuyển sang tiếng Việt"} onMouseDown={closeMenu}>
             {lang === "vi" ? "EN" : "VI"}
